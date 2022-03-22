@@ -1,0 +1,59 @@
+(dlv) continue
+> [unrecovered-panic] runtime.fatalpanic() /usr/local/go/src/runtime/panic.go:1271 (hits goroutine(1):1 total:1) (PC: 0x433000)
+Warning: debugging optimized function
+	runtime.curg._panic.arg: interface {}(string) "runtime error: index out of range [1] with length 1"
+  1266:	// fatalpanic implements an unrecoverable panic. It is like fatalthrow, except
+  1267:	// that if msgs != nil, fatalpanic also prints panic messages and decrements
+  1268:	// runningPanicDefers once main is blocked from exiting.
+  1269:	//
+  1270:	//go:nosplit
+=>1271:	func fatalpanic(msgs *_panic) {
+  1272:		pc := getcallerpc()
+  1273:		sp := getcallersp()
+  1274:		gp := getg()
+  1275:		var docrash bool
+  1276:		// Switch to the system stack to avoid any stack growth, which
+(dlv) stack
+0  0x0000000000433000 in runtime.fatalpanic
+   at /usr/local/go/src/runtime/panic.go:1271
+1  0x00000000004328a6 in runtime.gopanic
+   at /usr/local/go/src/runtime/panic.go:1147
+2  0x00000000004303f5 in runtime.goPanicIndex
+   at /usr/local/go/src/runtime/panic.go:90
+3  0x00000000004966da in main.main
+   at ./last-character.go:11
+4  0x0000000000435273 in runtime.main
+   at /usr/local/go/src/runtime/proc.go:255
+5  0x000000000045f721 in runtime.goexit
+   at /usr/local/go/src/runtime/asm_amd64.s:1581
+(dlv) break ./last-character.go:11
+(dlv) restart
+Process restarted with PID 2046318
+(dlv) break ./last-character.go:11
+(dlv) continue
+> main.main() ./last-character.go:11 (hits goroutine(1):1 total:1) (PC: 0x496605)
+     6:	)
+     7:	
+     8:	func main() {
+     9:		fmt.Println("Hello Gophers! Pass me a word and I will print the last character!")
+    10:	
+=>  11:		arg := os.Args[1]
+    12:	
+    13:		fmt.Printf("The last character in that word is: %c\n", arg[len(arg)])
+    14:	}
+(dlv) next
+> [unrecovered-panic] runtime.fatalpanic() /usr/local/go/src/runtime/panic.go:1271 (hits goroutine(1):1 total:1) (PC: 0x433000)
+Warning: debugging optimized function
+	runtime.curg._panic.arg: interface {}(string) "runtime error: index out of range [1] with length 1"
+  1266:	// fatalpanic implements an unrecoverable panic. It is like fatalthrow, except
+  1267:	// that if msgs != nil, fatalpanic also prints panic messages and decrements
+  1268:	// runningPanicDefers once main is blocked from exiting.
+  1269:	//
+  1270:	//go:nosplit
+=>1271:	func fatalpanic(msgs *_panic) {
+  1272:		pc := getcallerpc()
+  1273:		sp := getcallersp()
+  1274:		gp := getg()
+  1275:		var docrash bool
+  1276:		// Switch to the system stack to avoid any stack growth, which
+(dlv) exit
