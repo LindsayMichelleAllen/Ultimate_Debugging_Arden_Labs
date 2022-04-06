@@ -2,7 +2,7 @@
 `goroutine <#> stack`  <-- show stack trace of goroutine
 `goroutine <#>`        <-- switch to goroutine
 
-Jesus you can do this with threads too
+You can do this with threads too
 
 stack -full will show variable values with each stack frame
 
